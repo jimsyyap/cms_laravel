@@ -14,7 +14,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        return view('posts.index')->with('posts', Post::all());
     }
 
     /**
@@ -89,6 +89,25 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::withTrashed() -> where('id', $id) -> firstOrFail();
+        $post->delete(); // softdelete post still in db
+        if ($post->trashed()){
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
+        session() -> flash('success', 'Post was deleted.');
+        return redirect(route('posts.index'));
+    }
+
+    /**
+        displays a list of post in trash
+        @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        $trashed = Post::withTrashed()->get();
+        return view('posts.index')->withPosts($trashed);
+        // withPosts is same as ->with('posts'. $trashed)
     }
 }

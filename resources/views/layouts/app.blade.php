@@ -10,6 +10,14 @@
         <main class="py-4">
             @auth
                 <div class="container">
+                    <div class="mb-2">
+                        @if(session() -> has('success'))
+                            <alert class="alert-success">
+                            {{ session() -> get('success') }}
+                            {{-- from controller --}}
+                            </alert>
+                        @endif
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="list-group">
@@ -25,6 +33,13 @@
                                         </a>
                                     </li>
                                 </ul>
+                                <us class="list-group mt-4">
+                                    <li class="list-group-item">
+                                        <a href="{{ route('trashed-posts.index') }}">
+                                            Trash
+                                        </a>
+                                    </li>
+                                </us>
                             </div>
                         </div>
                         <div class="col-md-8">
