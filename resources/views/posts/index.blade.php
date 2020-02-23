@@ -28,19 +28,26 @@
                             @foreach($posts as $post)
                                 <tr>
                                     <td>
-                                        <img src="{{ URL::asset('/storage/'.$post -> image) }}" width="180px" height="160px" alt="test image">
+                                        <img src="{{ asset('/storage/'.$post -> image) }}" width="180px" height="160px" alt="test image">
                                     </td>
                                     <td>
                                         {{ $post -> title }}
                                     </td>
-                                    <td>
-                                        @if(!$post -> trashed())
-                                            {{-- if post not trashed, hide edit button --}}
-                                            <a class="btn btn-outline-info btn-sm" href="">
+                                    @if($post -> trashed())
+                                        <td>
+                                            <a class="btn btn-outline-info btn-sm" 
+                                                href="{{ route('posts.edit', $post -> id) }}">
+                                                Restore
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <a class="btn btn-outline-info btn-sm" 
+                                                href="{{ route('posts.edit', $post -> id) }}">
                                                 Edit
                                             </a>
-                                        @endif
-                                    </td>
+                                        </td>
+                                    @endif
                                     <td>
                                         <form action="{{ route('posts.destroy', $post -> id) }}" method="POST">
                                             @csrf
