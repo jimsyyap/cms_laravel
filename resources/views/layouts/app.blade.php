@@ -33,13 +33,13 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <us class="list-group mt-4">
+                                <ul class="list-group mt-4">
                                     <li class="list-group-item">
                                         <a href="{{ route('trashed-posts.index') }}">
-                                            Trash
+                                            Trash Posts
                                         </a>
                                     </li>
-                                </us>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-md-8">

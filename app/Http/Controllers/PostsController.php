@@ -102,10 +102,25 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
+        /*
+        $post -> delete();
+        session() -> flash('success', 'Post deleted.');
+        return redirect(route('posts.index'));
+            above codes show softDeleted post. if you checked posts table, only one post shows. Prev softDeleted posts deleted from db?
+        above refactored to hard delete below
+        if($post -> trashed()){
+            $post -> forceDelete();
+        } else {
+            $post -> delete();
+        }
+            //this failed = 404. Route model binding ek-ek didnt work so change destroy params from Post $post to $id, then use below
+         */
+
+        //$post = Post::withTrashed() -> where('id', $id) -> first();
         $post = Post::withTrashed() -> where('id', $id) -> firstOrFail();
-        $post->delete(); // softdelete post still in db
+        // $post->delete(); // softdelete post still in db
         if ($post->trashed()){
-            $post -> deleteImage();
+            //$post -> deleteImage();
             $post->forceDelete();
         } else {
             $post->delete();
@@ -120,8 +135,8 @@ class PostsController extends Controller
      */
     public function trashed()
     {
-        $trashed = Post::withTrashed()->get();
-        return view('posts.index')->withPosts($trashed);
-        // withPosts is same as ->with('posts'. $trashed)
+        $trashed = Post::onlyTrashed()->get();
+        return view('posts.index')->with('posts', $trashed);
+            //bahdcasts code different tuts vs repository...this works now.
     }
 }
