@@ -20,10 +20,13 @@
                 </td>
                 @if($post -> trashed())
                     <td>
-                        <a class="btn btn-outline-info btn-sm" 
-                           href="{{ route('posts.edit', $post -> id) }}">
-                           Restore
-                        </a>
+                        <form action="{{ route('restore-post', $post -> id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-outline-info btn-sm" type="submit">
+                               Restore
+                            </button>
+                        </form>
                     </td>
                 @else
                     <td>

@@ -21,5 +21,6 @@ class Post extends Model
     public function deleteImage()
     {
         Storage::delete($this -> image);
+        // used in postscontroller
     }
 }

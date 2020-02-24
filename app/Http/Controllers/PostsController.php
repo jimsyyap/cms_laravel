@@ -120,7 +120,7 @@ class PostsController extends Controller
         $post = Post::withTrashed() -> where('id', $id) -> firstOrFail();
         // $post->delete(); // softdelete post still in db
         if ($post->trashed()){
-            //$post -> deleteImage();
+            $post -> deleteImage();
             $post->forceDelete();
         } else {
             $post->delete();
@@ -139,4 +139,13 @@ class PostsController extends Controller
         return view('posts.index')->with('posts', $trashed);
             //bahdcasts code different tuts vs repository...this works now.
     }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed() -> where('id', $id) -> firstOrFail();
+        $post -> restore();
+        session() -> flash('success', 'Post restored');
+        return redirect() -> back();
+    }
+
 }
