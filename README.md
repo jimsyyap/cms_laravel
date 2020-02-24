@@ -5,7 +5,7 @@
             . ul>li was us>li
             . bahdcasts repo code is different from tutorial code
                 . withTrashed() should be onlyTrashed()
-[no joy] - syntastic vim plugin
+[ test=no joy ] - syntastic vim plugin
 [sorted] - image not showing '{{ asset($post->image) }}'
     . the image url is wrong, shows as http://localhost:8000/posts/N08dJ....jpeg
     . how to fix that url?
